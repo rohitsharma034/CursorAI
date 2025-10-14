@@ -1,0 +1,275 @@
+@model InmateSearchWebApp.Models.InmateSearchRequest
+@{
+    ViewData["Title"] = "Professional Inmate Search";
+}
+
+<!-- Hero Section -->
+<div class="hero-section text-center py-5 mb-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="hero-content">
+                    <div class="jail-icon mb-3">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <h1 class="display-4 fw-bold text-white mb-4">
+                        Professional Inmate Search
+                    </h1>
+                    <p class="lead text-white-50 mb-4">
+                        Advanced automation platform for inmate database searches and AccessCorrections account management
+                    </p>
+                    <div class="d-flex justify-content-center gap-3 flex-wrap">
+                        <span class="badge bg-white text-primary px-3 py-2 rounded-pill">
+                            <i class="fas fa-robot me-1"></i>Fully Automated
+                        </span>
+                        <span class="badge bg-white text-primary px-3 py-2 rounded-pill">
+                            <i class="fas fa-shield-alt me-1"></i>Secure Process
+                        </span>
+                        <span class="badge bg-white text-primary px-3 py-2 rounded-pill">
+                            <i class="fas fa-clock me-1"></i>Real-time Monitoring
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Jail-themed decorative elements -->
+    <div class="jail-elements">
+        <div class="jail-bar jail-bar-1"></div>
+        <div class="jail-bar jail-bar-2"></div>
+        <div class="jail-bar jail-bar-3"></div>
+        <div class="jail-bar jail-bar-4"></div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <!-- Main Search Card -->
+            <div class="card shadow-lg mb-5">
+                <div class="card-header">
+                    <h2 class="mb-0">
+                        <i class="fas fa-search me-2"></i>Inmate Search & Account Setup
+                    </h2>
+                    <p class="mb-0 mt-2">Enter your information to begin the automated search and account creation process</p>
+                </div>
+                <div class="card-body">
+                    @if (ViewBag.Result != null)
+                    {
+                        <div class="alert @(ViewBag.Success ? "alert-success" : "alert-danger") alert-dismissible fade show" role="alert">
+                            <i class="fas @(ViewBag.Success ? "fa-check-circle" : "fa-exclamation-triangle") me-2"></i>
+                            @ViewBag.Result
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    }
+
+                    <form asp-action="SearchInmate" method="post" id="inmateSearchForm">
+                        <div class="row g-4">
+                            <div class="col-md-6">
+                                <label asp-for="FirstName" class="form-label">
+                                    <i class="fas fa-user me-1"></i>Customer First Name *
+                                </label>
+                                <input asp-for="FirstName" class="form-control" placeholder="Enter your first name" required />
+                                <span asp-validation-for="FirstName" class="text-danger small"></span>
+                            </div>
+                           
+
+                             <div class="col-md-6">
+                                <label asp-for=" Username" class="form-label">
+                                    <i class="fas fa-envelope me-1"></i>Customer Email Address *
+                                </label>
+                                <input asp-for="Username" type="email" class="form-control" placeholder="your.email@example.com" required />
+                                <span asp-validation-for="Username" class="text-danger small"></span>
+                            </div>
+                        </div>
+
+                        <div class="row g-4 mt-2">
+                           
+                            <div class="col-md-6">
+                                <label asp-for="Address" class="form-label">
+                                    <i class="fas fa-map-marker-alt me-1"></i>Customer Billing Address *
+                                </label>
+                                <input asp-for="Address" class="form-control" placeholder="123 Main St, City, State 12345" required />
+                                <span asp-validation-for="Address" class="text-danger small"></span>
+                            </div>
+
+
+                            <div class="col-md-6">
+                                <label asp-for="LastName" class="form-label">
+                                    <i class="fas fa-user me-1"></i>Inmate Last Name *
+                                </label>
+                                <input asp-for="LastName" class="form-control" placeholder="Enter last name to search" required />
+                                <span asp-validation-for="LastName" class="text-danger small"></span>
+                            </div>
+                        </div>
+
+                        <div class="alert alert-info mt-4">
+                            <div class="d-flex align-items-start">
+                                <i class="fas fa-info-circle me-3 mt-1"></i>
+                                <div>
+                                    <strong>Process Overview:</strong> This application will automatically search the Tarrant County inmate database using the provided last name, select the first matching result, and then create a new account on AccessCorrections.com with your information. The browser will open in visible mode so you can monitor the entire process in real-time.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
+                            <button type="submit" class="btn btn-primary btn-lg px-5" id="searchButton">
+                                <i class="fas fa-search me-2"></i>Start Automated Search
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Features Section -->
+            <div class="row g-4 mb-5" id="features">
+                <div class="col-md-4">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body text-center p-4">
+                            <div class="bg-primary bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                                <i class="fas fa-database text-primary fs-4"></i>
+                            </div>
+                            <h5 class="card-title">Database Integration</h5>
+                            <p class="card-text text-muted">Direct integration with Tarrant County inmate database for accurate, up-to-date search results.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body text-center p-4">
+                            <div class="bg-success bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                                <i class="fas fa-cogs text-success fs-4"></i>
+                            </div>
+                            <h5 class="card-title">Automated Processing</h5>
+                            <p class="card-text text-muted">Fully automated account creation and form filling with intelligent error handling and retry logic.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body text-center p-4">
+                            <div class="bg-info bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                                <i class="fas fa-eye text-info fs-4"></i>
+                            </div>
+                            <h5 class="card-title">Real-time Monitoring</h5>
+                            <p class="card-text text-muted">Watch the entire process unfold in real-time with detailed progress indicators and status updates.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- How It Works Section -->
+            <div class="card shadow-lg" id="how-it-works">
+                <div class="card-header">
+                    <h3 class="mb-0">
+                        <i class="fas fa-cogs me-2"></i>How It Works
+                    </h3>
+                    <p class="mb-0 mt-2 text-muted">Our automated process handles everything from search to account setup</p>
+                </div>
+                <div class="card-body">
+                    <div class="row g-4">
+                        <div class="col-md-6 col-lg-3">
+                            <div class="text-center">
+                                <div class="bg-primary text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 50px; height: 50px;">
+                                    <span class="fw-bold">1</span>
+                                </div>
+                                <h6 class="fw-bold">Database Search</h6>
+                                <p class="small text-muted">Searches Tarrant County inmate database using the provided last name with advanced matching algorithms.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-3">
+                            <div class="text-center">
+                                <div class="bg-primary text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 50px; height: 50px;">
+                                    <span class="fw-bold">2</span>
+                                </div>
+                                <h6 class="fw-bold">Result Selection</h6>
+                                <p class="small text-muted">Automatically selects the first matching inmate result and extracts relevant identification information.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-3">
+                            <div class="text-center">
+                                <div class="bg-primary text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 50px; height: 50px;">
+                                    <span class="fw-bold">3</span>
+                                </div>
+                                <h6 class="fw-bold">Account Creation</h6>
+                                <p class="small text-muted">Creates a new account on AccessCorrections.com using your provided information and credentials.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-3">
+                            <div class="text-center">
+                                <div class="bg-primary text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 50px; height: 50px;">
+                                    <span class="fw-bold">4</span>
+                                </div>
+                                <h6 class="fw-bold">Form Completion</h6>
+                                <p class="small text-muted">Automatically fills out all required forms including personal information, billing address, and password setup.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function() {
+            // Smooth scrolling for navigation links
+            $('a[href^="#"]').on('click', function(event) {
+                var target = $(this.getAttribute('href'));
+                if( target.length ) {
+                    event.preventDefault();
+                    $('html, body').stop().animate({
+                        scrollTop: target.offset().top - 100
+                    }, 1000);
+                }
+            });
+
+            // Form submission handling
+            $('#inmateSearchForm').on('submit', function() {
+                $('#searchButton').prop('disabled', true);
+                $('#searchButton').html('<i class="fas fa-spinner fa-spin me-2"></i>Processing...');
+                
+                // Show loading modal
+                $('#loadingModal').modal('show');
+            });
+
+            // Auto-hide alerts after 8 seconds
+            setTimeout(function() {
+                $('.alert').fadeOut('slow');
+            }, 8000);
+
+            // Add animation to cards on scroll
+            $(window).scroll(function() {
+                $('.card').each(function() {
+                    var elementTop = $(this).offset().top;
+                    var elementBottom = elementTop + $(this).outerHeight();
+                    var viewportTop = $(window).scrollTop();
+                    var viewportBottom = viewportTop + $(window).height();
+
+                    if (elementBottom > viewportTop && elementTop < viewportBottom) {
+                        $(this).addClass('animate__animated animate__fadeInUp');
+                    }
+                });
+            });
+        });
+    </script>
+}
+
+<!-- Enhanced Loading Modal -->
+<div class="modal fade" id="loadingModal" tabindex="-1" aria-labelledby="loadingModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body text-center py-5">
+                <div class="spinner-border text-primary mb-4" role="status" style="width: 3rem; height: 3rem;">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+                <h4 class="mb-3">Processing Your Request</h4>
+                <p class="text-muted mb-4">Please wait while we search for inmates and set up your account. This process may take a few minutes...</p>
+                <div class="progress" style="height: 6px;">
+                    <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 100%"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
