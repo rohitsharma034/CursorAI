@@ -11,7 +11,7 @@ namespace InmateSearchWebApp.Services
 {
     public class InmateSearchService
     {
-        public async Task<string> RunAsync2(string lastName, string username, string address, string firstname)
+        public async Task<string> RunAsync(string lastName, string username, string address, string firstname)
         {
             string phone = "5551234567";
             using var playwright = await Playwright.CreateAsync();
@@ -66,12 +66,12 @@ namespace InmateSearchWebApp.Services
             Console.WriteLine("✅ Flow finished up to payment preparation (no money sent).");
             return $"Found inmate {name} (CID {cid}). Flow completed successfully.";
         }
-        public async Task<string> RunAsync(string lastName1, string username, string address, string firstname)
+        public async Task<string> RunAsync2(string lastName1, string username, string address, string firstname)
         {
             using var playwright = await Playwright.CreateAsync();
             var browser = await playwright.Chromium.LaunchAsync(new BrowserTypeLaunchOptions
             {
-                Headless = true
+                Headless = false
             });
 
             var page = await browser.NewPageAsync();
@@ -92,16 +92,16 @@ namespace InmateSearchWebApp.Services
                 // Append a new option with value 2000
                 await page.EvaluateAsync(@"() => {
     const select = document.querySelector('select#recordsId');
-    if (!select.querySelector('option[value=""2000""]')) {
+    if (!select.querySelector('option[value=""2""]')) {
         const option = document.createElement('option');
-        option.value = '2000';
-        option.text = '2000';
+        option.value = '2';
+        option.text = '2';
         select.appendChild(option);
     }
 }");
 
                 // Select the new option automatically
-                await page.SelectOptionAsync("select#recordsId", "2000");
+                await page.SelectOptionAsync("select#recordsId", "2");
 
                 await page.ClickAsync("button[type=submit], input[type=submit]");
                 //await page.FillAsync("input[name=LastName]", c.ToString());
